@@ -104,7 +104,8 @@ npm run dev                     # open http://localhost:3000
 | Command | What it does |
 |---|---|
 | `npm run dev` | Start the site for development at http://localhost:3000 |
-| `npm run build` | Create tables (if needed) and build the site for production |
+| `npm run build` | Check settings, create tables (if needed) and build the site for production |
+| `npm run check-env` | Only check the settings (environment variables) |
 | `npm start` | Run the production build |
 | `npm run db:migrate` | Create the database tables (safe to run again) |
 | `npm run make-admin -- you@example.com` | Turn an existing account into an admin |
@@ -121,7 +122,7 @@ npm run dev                     # open http://localhost:3000
 | `OPENALEX_API_KEY` | Recommended | Free key for better search results |
 | `ANTHROPIC_API_KEY` | Optional | Turns on AI-written summaries |
 | `ANTHROPIC_MODEL` | Optional | Claude model for summaries (default `claude-haiku-4-5-20251001`) |
-| `NEXTAUTH_URL` | Only on your computer | `http://localhost:3000`. Don't set it on Vercel |
+| `NEXTAUTH_URL` | Only on your computer | `http://localhost:3000`. Don't set it on Vercel, not even empty |
 
 ---
 

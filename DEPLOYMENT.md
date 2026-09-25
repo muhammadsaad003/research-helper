@@ -181,11 +181,12 @@ Without this key, the "Summarize abstract" button still works. It picks the most
    | `OPENALEX_API_KEY` | Your OpenAlex key (skip if you don't have one) |
    | `ANTHROPIC_API_KEY` | Your Anthropic key (skip if you don't have one) |
 
-   > **Don't add `NEXTAUTH_URL` on Vercel.** It's only for running on your own computer. Vercel works out the address by itself.
+   > **Don't add `NEXTAUTH_URL` on Vercel, not even with an empty value.** It's only for running on your own computer. Vercel works out the address by itself. Also skip the optional keys you don't have instead of adding them empty.
 
 7. Click **Deploy**.
 8. Wait 1 to 3 minutes. If you open the build log, you should see:
    ```
+   ✓ Settings look good.
    ✓ Database tables are ready.
    ```
    That means your site connected to Neon and created the tables.
@@ -277,6 +278,17 @@ Useful when you want to change the code and see the result before uploading.
 ---
 
 ## Troubleshooting
+
+**The build fails with "Error occurred prerendering page" and "TypeError: Invalid URL" (with `input: ''`).**
+Your Vercel project has a `NEXTAUTH_URL` variable with an **empty** value. Vercel doesn't need `NEXTAUTH_URL` at all.
+1. Open your project on Vercel, then **Settings, Environment Variables**.
+2. Find `NEXTAUTH_URL`, click the **⋯** next to it, and choose **Remove** (or **Delete**).
+3. Go to **Deployments**, click the **⋯** next to the newest deployment, and choose **Redeploy**.
+
+Newer versions of this project check for this before building and print "Settings problem found before building" with the fix.
+
+**The build fails with "Settings problem found before building".**
+Read the numbered lines under it. Each one says which variable is wrong and what to do. Fix it in **Settings, Environment Variables**, then **Redeploy**.
 
 **The Vercel build fails with "DATABASE_URL is not set".**
 You didn't add `DATABASE_URL`, or there's a typo in the name. Add it in **Settings, Environment Variables**, then **Redeploy**.

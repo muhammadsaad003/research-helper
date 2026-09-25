@@ -5,11 +5,12 @@
   "description": "Research helper website: search papers, save a reading library, take notes, compare papers and generate citations. Roles: visitor, user, admin.",
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/migrate.js && next build",
+    "build": "node scripts/check-env.js && node scripts/migrate.js && next build",
     "start": "next start",
     "db:migrate": "node scripts/migrate.js",
     "make-admin": "node scripts/make-admin.js",
-    "seed": "node scripts/seed-demo.js"
+    "seed": "node scripts/seed-demo.js",
+    "check-env": "node scripts/check-env.js"
   },
   "engines": {
     "node": ">=18.18.0"
