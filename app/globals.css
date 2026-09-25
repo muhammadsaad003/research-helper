@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------
+   Colour tokens. Light theme first, dark theme under .dark
+   Palette: blue-black ink on cool paper, with a highlighter yellow.
+   ------------------------------------------------------------ */
+:root {
+  --canvas: 243 245 248;     /* page background, cool paper */
+  --surface: 255 255 255;    /* sheets and panels */
+  --ink: 28 37 65;           /* blue-black text, like fountain-pen ink */
+  --soft: 88 100 125;        /* secondary text */
+  --line: 214 220 229;       /* borders and rules */
+  --primary: 28 37 65;       /* main buttons */
+  --on-primary: 255 255 255;
+  --mark: 255 226 84;        /* highlighter yellow */
+  --on-mark: 28 37 65;
+  --danger: 196 58 58;       /* also the red rule on index cards */
+  --ok: 21 122 86;
+  --warn: 166 104 8;
+  --cardline: 186 206 232;   /* faint blue lines on index cards */
+  color-scheme: light;
+}
+
+.dark {
+  --canvas: 13 19 33;
+  --surface: 21 30 49;
+  --ink: 226 231 241;
+  --soft: 148 160 184;
+  --line: 44 57 82;
+  --primary: 205 217 255;
+  --on-primary: 13 19 33;
+  --mark: 255 226 84;
+  --on-mark: 28 37 65;
+  --danger: 240 112 112;
+  --ok: 88 204 156;
+  --warn: 238 178 72;
+  --cardline: 46 64 96;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-canvas text-ink font-sans antialiased;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  h1, h2, h3 {
+    @apply font-serif;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  ::selection {
+    background: rgb(var(--mark));
+    color: rgb(var(--on-mark));
+  }
+  :focus-visible {
+    outline: 2px solid rgb(var(--ink));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  /* Highlighter marks: used for search terms in results */
+  mark {
+    color: rgb(var(--on-mark));
+    background: linear-gradient(
+      to bottom,
+      transparent 14%,
+      rgb(var(--mark)) 14%,
+      rgb(var(--mark)) 90%,
+      transparent 90%
+    );
+    padding: 0 0.12em;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .btn-primary {
+    @apply btn bg-primary text-on-primary hover:opacity-90;
+  }
+  .btn-outline {
+    @apply btn border border-line bg-surface text-ink hover:border-ink/40;
+  }
+  .btn-ghost {
+    @apply btn text-ink hover:bg-ink/5;
+  }
+  .btn-danger {
+    @apply btn bg-danger text-white hover:opacity-90;
+  }
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs;
+  }
+
+  /* Form fields */
+  .field {
+    @apply w-full rounded-md border border-line bg-surface px-3 py-2 text-sm text-ink placeholder:text-soft/70 focus:border-ink/60 focus:outline-none focus:ring-2 focus:ring-mark/70;
+  }
+  .label {
+    @apply mb-1 block text-sm font-medium text-ink;
+  }
+
+  .panel {
+    @apply rounded-lg border border-line bg-surface;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-line px-2.5 py-0.5 text-xs text-soft;
+  }
+
+  /* The index card: white card, faint blue lines, one red rule near the top. */
+  .index-card {
+    position: relative;
+    background-color: rgb(var(--surface));
+    background-image:
+      linear-gradient(to bottom, transparent 58px, rgb(var(--danger) / 0.55) 58px, rgb(var(--danger) / 0.55) 60px, transparent 60px),
+      repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgb(var(--cardline) / 0.7) 31px, rgb(var(--cardline) / 0.7) 32px);
+    /* Lines only start below the red rule: the second layer is sized to begin at 60px. */
+    background-size: 100% 100%, 100% calc(100% - 60px);
+    background-position: 0 0, 0 60px;
+    background-repeat: no-repeat, no-repeat;
+    border-radius: 3px;
+    box-shadow:
+      0 0 0 1px rgb(var(--line)),
+      0 18px 40px -24px rgb(28 37 65 / 0.45);
+  }
+
+  /* Same card without the blue lines (used behind forms). */
+  .index-card.plain {
+    background-image: linear-gradient(to bottom, transparent 58px, rgb(var(--danger) / 0.55) 58px, rgb(var(--danger) / 0.55) 60px, transparent 60px);
+  }
+
+  /* Lined paper for the notes box: lines scroll with the text. */
+  .lined {
+    line-height: 32px;
+    padding-top: 0;
+    background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgb(var(--cardline) / 0.8) 31px, rgb(var(--cardline) / 0.8) 32px);
+    background-attachment: local;
+  }
+
+  .prose-reading {
+    @apply font-serif text-[1.02rem] leading-[1.75] text-ink;
+    max-width: 68ch;
+  }
+
+  .skeleton {
+    @apply animate-pulse rounded bg-ink/10;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

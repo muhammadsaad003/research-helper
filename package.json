@@ -1,0 +1,32 @@
+{
+  "name": "research-helper",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Research helper website: search papers, save a reading library, take notes, compare papers and generate citations. Roles: visitor, user, admin.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "node scripts/migrate.js && next build",
+    "start": "next start",
+    "db:migrate": "node scripts/migrate.js",
+    "make-admin": "node scripts/make-admin.js",
+    "seed": "node scripts/seed-demo.js"
+  },
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "lucide-react": "^0.460.0",
+    "next": "15.5.26",
+    "next-auth": "^4.24.15",
+    "pg": "^8.23.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-hot-toast": "^2.6.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17"
+  }
+}
